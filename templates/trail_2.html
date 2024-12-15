@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+        <h1>Большая Тропа Севастополя</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/trail_info">О маршруте</a></li>
+                <li><a href="/booking">Бронирование</a></li>
+                <li><a href="/contact">Контакты</a></li>
+
+                {% if session.get('username') %}
+                    <li class="user-info">Привет, {{ session['username'] }}!</li>
+                    <li><a href="/logout">Выйти</a></li>
+
+                    {% if session['role'] == 'admin' %}
+                        <li><a href="{{ url_for('admin_panel') }}">Панель администратора</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="/register">Регистрация</a></li>
+                    <li><a href="/login">Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% if weather %}
+            <div class="weather-info">
+                <p><strong>Погода: </strong>{{ weather }}</p>
+                <p><strong>Температура: </strong>{{ temperature }}°C</p>
+            </div>
+        {% else %}
+            <p class="weather-info">Не удалось получить данные о погоде.</p>
+        {% endif %}
+    </header>
+
+<main>
+    <section class="trail-details">
+        <h2>Маршрут: Балаклава - Ласпинский перевал</h2>
+        <img src="https://hikeit.ru/wp-content/uploads/2022/01/IMG20210927150225.jpg" alt="Маршрут 2" class="trail-card-img">
+
+        <!-- Краткое описание маршрута -->
+        <p class="trail-description">Маршрут "Балаклава — Ласпинский перевал" проходит через живописные горные хребты и лесистые участки, предлагая захватывающие виды на Балаклавскую бухту и окрестности. Путь включает в себя исторические объекты и уникальные природные зоны.</p>
+
+        <!-- Полное описание маршрута -->
+        <h3>Описание маршрута:</h3>
+        <p class="trail-description">Маршрут "Балаклава — Ласпинский перевал" — это живописное и исторически значимое путешествие, которое проведет вас через горные тропы с потрясающими видами на крымские пейзажи. Путь начинается в Балаклаве, где можно насладиться видом на море и старинные здания. Далее маршрут ведет вглубь полуострова через леса и горные хребты к Ласпинскому перевалу, который соединяет Балаклаву с Севастополем.</p>
+
+        <p class="trail-description">Этот маршрут не является слишком сложным, но требует хорошей физической подготовки, так как включает в себя крутые участки и подъёмы. По пути можно увидеть старые военные укрепления, а также насладиться видами на Балаклавскую бухту и окрестные горы. Ласпинский перевал является важным стратегическим объектом и исторической точкой, которая связывает западный и восточный Крым.</p>
+
+        <p class="trail-description">Маршрут "Балаклава — Ласпинский перевал" — это прекрасная возможность не только насладиться красотой природы, но и прикоснуться к военной истории региона, а также почувствовать атмосферу древних времен, когда этот перевал играл важную роль в обороне Крыма.</p>
+    </section>
+
+    <!-- Информация о характеристиках маршрута -->
+    <section class="trail-info">
+        <h3>Характеристики маршрута:</h3>
+        <div class="trail-info-item">
+            <strong>Сложность:</strong> Средний
+        </div>
+        <div class="trail-info-item">
+            <strong>Продолжительность:</strong> 4-5 часов
+        </div>
+        <div class="trail-info-item">
+            <strong>Дистанция:</strong> 10-12 км
+        </div>
+        <div class="trail-info-item">
+            <strong>Локация:</strong> Севастополь, Крым
+        </div>
+    </section>
+
+    <div class="map-container1">
+        <iframe src="https://yandex.ru/map-widget/v1/?l=sat%2Cskl%2Cstv%2Csta&ll=33.733463%2C44.449259&mode=routes&rtext=44.512136%2C33.598321~44.425517%2C33.732658&rtt=pd&ruri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNDk2MjU5NTI2EjjQoNC-0YHRgdC40Y8sINCh0LXQstCw0YHRgtC-0L_QvtC70YwsINCR0LDQu9Cw0LrQu9Cw0LLQsCIKDa9kBkIVbgwyQg%2C%2C~ymapsbm1%3A%2F%2Forg%3Foid%3D223874015378&z=11" width="1150" height="377" frameborder="0"></iframe>
+    </div>
+</main>
+
+
+<footer>
+    <p>© 2024 Большая Тропа Севастополя | Все права защищены</p>
+</footer>
+
+</body>
+</html>

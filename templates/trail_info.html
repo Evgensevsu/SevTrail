@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Большая Тропа Севастополя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Большая Тропа Севастополя</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/trail_info">О маршруте</a></li>
+            <li><a href="/booking">Бронирование</a></li>
+            <li><a href="/contact">Контакты</a></li>
+
+            {% if session.get('username') %}
+                <li class="user-info">Привет, {{ session['username'] }}!</li>
+                <li><a href="/logout">Выйти</a></li>
+                {% if session['role'] == 'admin' %}
+                    <li><a href="{{ url_for('admin_panel') }}">Панель администратора</a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="/register">Регистрация</a></li>
+                <li><a href="/login">Войти</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% if weather %}
+        <div class="weather-info">
+            <p><strong>Погода: </strong>{{ weather }}</p>
+            <p><strong>Температура: </strong>{{ temperature }}°C</p>
+        </div>
+    {% else %}
+        <p class="weather-info">Не удалось получить данные о погоде.</p>
+    {% endif %}
+</header>
+
+<main>
+    <h2>Исследуйте природу и культуру Севастополя</h2>
+    <p>Большая Тропа — это живописный и захватывающий маршрут по самым интересным и историческим местам Севастополя.</p>
+
+    <h3>Маршруты</h3>
+    <div class="trail-cards-container">
+        <!-- Карточка 1 -->
+        <div class="trail-card">
+            <img src="https://a.d-cd.net/4f2dc06s-1920.jpg" alt="Маршрут 1" class="trail-card-img">
+            <h4>Балаклава - Бочка смерти</h4>
+            <p>Маршрут "Балаклава — Бочка смерти" включает в себя живописные прибрежные скалы и крутую тропу с потрясающими видами на Черное море. Пешеходный путь ведет через древние фортификационные сооружения и уникальные природные зоны.</p>
+            <a href="/trail_1" class="btn-view-details">Посмотреть маршрут</a> <!-- Ссылка на страницу маршрута -->
+        </div>
+
+        <!-- Карточка 2 -->
+        <div class="trail-card">
+            <img src="https://hikeit.ru/wp-content/uploads/2022/01/IMG20210927150225.jpg" alt="Маршрут 2" class="trail-card-img">
+            <h4>Балаклава - Ласпинский перевал</h4>
+            <p>Маршрут "Балаклава — Ласпинский перевал" проходит через горные хребты, предлагая захватывающие виды на Балаклавскую бухту и окрестности. Тропа ведет через леса, каменистые участки и исторические памятники.</p>
+            <a href="/trail_2" class="btn-view-details">Посмотреть маршрут</a> <!-- Ссылка на страницу маршрута -->
+        </div>
+
+        <!-- Карточка 3 -->
+        <div class="trail-card">
+            <img src="https://tripcrimea.ru/statia/pohod_po_krymu_s_nochevkoi_y_baidarskoi_dolini/smotrovaya_laspi_gora_kush-kaya_pohody_po_goram_kryma.jpg" alt="Маршрут 3" class="trail-card-img">
+            <h4>Ласпинский перевал – перевал Байдарские ворота</h4>
+            <p>Маршрут "Ласпинский перевал — перевал Байдарские ворота" проходит через живописные горные трассы, лесные участки и открытые пространства, предлагая красивые виды на Байдарскую долину и крымские горы.</p>
+            <a href="/trail_3" class="btn-view-details">Посмотреть маршрут</a> <!-- Ссылка на страницу маршрута -->
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2024 Большая Тропа Севастополя | Все права защищены</p>
+</footer>
+</body>
+</html>

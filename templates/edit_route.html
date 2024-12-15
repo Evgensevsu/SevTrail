@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование маршрута</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="edit-route-page">
+        <header>
+            <h2>Редактирование маршрута</h2>
+        </header>
+
+        <main>
+            <form action="{{ url_for('edit_route', id=route.id) }}" method="POST">
+                <div class="form-group">
+                    <label for="name">Название маршрута:</label>
+                    <input type="text" id="name" name="name" value="{{ route.name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Описание маршрута:</label>
+                    <textarea id="description" name="description" required>{{ route.description }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Дата маршрута:</label>
+                    <input type="date" id="date" name="date" value="{{ route.date }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="length">Длина маршрута (км):</label>
+                    <input type="number" id="length" name="length" value="{{ route.length }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="difficulty">Сложность маршрута:</label>
+                    <select id="difficulty" name="difficulty">
+                        <option value="Легкий" {% if route.difficulty == 'Легкий' %}selected{% endif %}>Легкий</option>
+                        <option value="Средний" {% if route.difficulty == 'Средний' %}selected{% endif %}>Средний</option>
+                        <option value="Сложный" {% if route.difficulty == 'Сложный' %}selected{% endif %}>Сложный</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start_point">Начальная точка маршрута:</label>
+                    <input type="text" id="start_point" name="start_point" value="{{ route.start_point }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="end_point">Конечная точка маршрута:</label>
+                    <input type="text" id="end_point" name="end_point" value="{{ route.end_point }}">
+                </div>
+
+                <input type="submit" value="Сохранить изменения">
+            </form>
+
+            <a href="{{ url_for('admin_panel') }}" class="back-link">Назад к панели администратора</a>
+        </main>
+    </div>
+</body>
+</html>

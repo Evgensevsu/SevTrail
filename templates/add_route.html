@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание маршрута</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Большая Тропа Севастополя</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/trail_info">О маршруте</a></li>
+                <li><a href="/contact">Контакты</a></li>
+
+                {% if session.get('username') %}
+                    <li class="user-info">Привет, {{ session['username'] }}!</li>
+                    <li><a href="/logout">Выйти</a></li>
+
+                    {% if session['role'] == 'admin' %}
+                        <li><a href="{{ url_for('admin_panel') }}">Панель администратора</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="/register">Регистрация</a></li>
+                    <li><a href="/login">Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="create-route-page">
+        <h2>Создание нового маршрута</h2>
+        <form action="{{ url_for('add_route') }}" method="POST">
+            <div class="form-group">
+                <label for="name">Название маршрута:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Описание маршрута:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Дата маршрута:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="length">Длина маршрута (км):</label>
+                <input type="number" id="length" name="length">
+            </div>
+
+            <div class="form-group">
+                <label for="difficulty">Сложность маршрута:</label>
+                <select id="difficulty" name="difficulty">
+                    <option value="Легкий">Легкий</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Сложный">Сложный</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_point">Начальная точка маршрута:</label>
+                <input type="text" id="start_point" name="start_point">
+            </div>
+
+            <div class="form-group">
+                <label for="end_point">Конечная точка маршрута:</label>
+                <input type="text" id="end_point" name="end_point">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Создать маршрут">
+            </div>
+        </form>
+
+        <a href="{{ url_for('admin_panel') }}" class="back-link">Назад в панель администратора</a>
+    </main>
+
+    <footer>
+        <p>© 2024 Большая Тропа Севастополя | Все права защищены</p>
+    </footer>
+</body>
+</html>

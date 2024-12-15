@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="booking-page">
+    <header class="booking-header">
+        <h1>Бронирование маршрута</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/trail_info">О маршруте</a></li>
+                <li><a href="/booking">Бронирование</a></li>
+                <li><a href="/contact">Контакты</a></li>
+
+                {% if session.get('username') %}
+                    <li class="user-info">Привет, {{ session['username'] }}!</li>
+                    <li><a href="/logout">Выйти</a></li>
+
+                    {% if session['role'] == 'admin' %}
+                        <li><a href="{{ url_for('admin_panel') }}">Панель администратора</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="/register">Регистрация</a></li>
+                    <li><a href="/login">Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="booking-form-container">
+            <h2>Выберите маршрут и дату для бронирования</h2>
+            {% if error_message %}
+                <div class="error-message" style="color: red; font-weight: bold;">
+                    {{ error_message }}
+                </div>
+            {% endif %}
+            <form method="POST">
+                <label for="route_id">Выберите маршрут:</label>
+                <select name="route_id" required>
+                    {% for route in routes %}
+                        <option value="{{ route.id }}">{{ route.name }} - {{ route.start_point }} → {{ route.end_point }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="booking_date">Выберите дату:</label>
+                <input type="date" name="booking_date" required>
+
+                <button type="submit">Забронировать</button>
+            </form>
+        </div>
+
+        <div class="booking-list">
+            <h3>Ваши активные бронирования</h3>
+            {% if bookings %}
+                <ul>
+                    {% for booking in bookings %}
+                        <li>
+                            <div class="icon">B</div>
+                            <div>
+                                <h4>{{ booking.route.name }}</h4>
+                                <p><strong>Дата бронирования:</strong> {{ booking.booking_date }}</p>
+                                <p><strong>Маршрут:</strong> {{ booking.route.start_point }} → {{ booking.route.end_point }}</p>
+                                <form method="POST" action="{{ url_for('cancel_booking', booking_id=booking.id) }}" style="display:inline;">
+                                    <button type="submit">Отменить бронирование</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>У вас нет активных бронирований.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Большая Тропа Севастополя | Все права защищены</p>
+    </footer>
+</body>
+</html>

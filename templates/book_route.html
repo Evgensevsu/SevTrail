@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование маршрута</title>
+</head>
+<body>
+    <h1>Подтвердите бронирование маршрута</h1>
+    <h3>{{ route.name }}</h3>
+    <p>{{ route.description }}</p>
+    <p>Дата: {{ route.date }}</p>
+    <p>Длина: {{ route.length }} км</p>
+    <p>Сложность: {{ route.difficulty }}</p>
+    <p>Место начала: {{ route.start_point }} — Место окончания: {{ route.end_point }}</p>
+
+    <form method="POST">
+        <button type="submit">Подтвердить бронирование</button>
+    </form>
+    <a href="{{ url_for('home') }}">Отмена</a>
+</body>
+</html>

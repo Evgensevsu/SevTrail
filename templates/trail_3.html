@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+        <h1>Большая Тропа Севастополя</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/trail_info">О маршруте</a></li>
+                <li><a href="/booking">Бронирование</a></li>
+                <li><a href="/contact">Контакты</a></li>
+
+                {% if session.get('username') %}
+                    <li class="user-info">Привет, {{ session['username'] }}!</li>
+                    <li><a href="/logout">Выйти</a></li>
+
+                    {% if session['role'] == 'admin' %}
+                        <li><a href="{{ url_for('admin_panel') }}">Панель администратора</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="/register">Регистрация</a></li>
+                    <li><a href="/login">Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% if weather %}
+            <div class="weather-info">
+                <p><strong>Погода: </strong>{{ weather }}</p>
+                <p><strong>Температура: </strong>{{ temperature }}°C</p>
+            </div>
+        {% else %}
+            <p class="weather-info">Не удалось получить данные о погоде.</p>
+        {% endif %}
+    </header>
+
+<main>
+    <section class="trail-details">
+        <h2>Маршрут: Ласпинский перевал — перевал Байдарские ворота</h2>
+        <img src="https://tripcrimea.ru/statia/pohod_po_krymu_s_nochevkoi_y_baidarskoi_dolini/smotrovaya_laspi_gora_kush-kaya_pohody_po_goram_kryma.jpg" alt="Маршрут 1" class="trail-card-img">
+
+        <!-- Краткое описание маршрута -->
+        <p class="trail-description">Маршрут "Ласпинский перевал — перевал Байдарские ворота" проходит через живописные горные трассы, лесные участки и открытые пространства, предлагая красивые виды на Байдарскую долину и крымские горы.</p>
+
+        <!-- Полное описание маршрута -->
+        <h3>Описание маршрута:</h3>
+        <p class="trail-description">Маршрут "Ласпинский перевал — перевал Байдарские ворота" является увлекательным и живописным путешествием по Крымским горам. Начало маршрута в Ласпинском перевале, который представляет собой важную историческую и стратегическую точку. Здесь начинаются крутые подъёмы и тропы, проходящие через лесистые участки и открытые пространства, с которых открываются захватывающие виды на Байдарскую долину и окрестные горы.</p>
+
+        <p class="trail-description">Маршрут не является чрезмерно сложным, но требует хорошей физической подготовки, так как включает крутые участки и возможные каменистые тропы. По пути вы увидите уникальные природные зоны, а также сможете насладиться видами на горные хребты и долины, окруженные зелёными лесами. Перевал Байдарские ворота — это историческая точка, имеющая важное значение для региона, где в древности проходили торговые и военные пути.</p>
+
+        <p class="trail-description">Этот маршрут сочетает в себе элементы исторического путешествия и природного туризма, позволяя ощутить атмосферу Крыма и насладиться его пейзажами, ставшими частью культурного наследия полуострова.</p>
+    </section>
+
+    <!-- Информация о характеристиках маршрута -->
+    <section class="trail-info">
+        <h3>Характеристики маршрута:</h3>
+        <div class="trail-info-item">
+            <strong>Сложность:</strong> Средний
+        </div>
+        <div class="trail-info-item">
+            <strong>Продолжительность:</strong> 4-5 часов
+        </div>
+        <div class="trail-info-item">
+            <strong>Дистанция:</strong> 10-12 км
+        </div>
+        <div class="trail-info-item">
+            <strong>Локация:</strong> Севастополь, Крым
+        </div>
+    </section>
+
+    <div class="map-container1">
+        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Afae66daddc9298bed9def23800c09d8a67b0de684d311eba6b39b0a4c2670264&amp;source=constructor" width="100%" height="400" frameborder="1" allowfullscreen="true" class="map-iframe"></iframe>
+    </div>
+</main>
+
+<footer>
+    <p>© 2024 Большая Тропа Севастополя | Все права защищены</p>
+</footer>
+
+</body>
+</html>

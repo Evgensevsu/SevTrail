@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Большая Тропа Севастополя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Большая Тропа Севастополя</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/trail_info">О маршруте</a></li>
+                <li><a href="/booking">Бронирование</a></li>
+                <li><a href="/contact">Контакты</a></li>
+
+                {% if session.get('username') %}
+                    <li class="user-info">Привет, {{ session['username'] }}!</li>
+                    <li><a href="/logout">Выйти</a></li>
+
+                    {% if session['role'] == 'admin' %}
+                        <li><a href="{{ url_for('admin_panel') }}">Панель администратора</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="/register">Регистрация</a></li>
+                    <li><a href="/login">Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% if weather %}
+            <div class="weather-info">
+                <p><strong>Погода: </strong>{{ weather }}</p>
+                <p><strong>Температура: </strong>{{ temperature }}°C</p>
+            </div>
+        {% else %}
+            <p class="weather-info">Не удалось получить данные о погоде.</p>
+        {% endif %}
+    </header>
+
+    <main>
+
+        <h2>Исследуйте природу и культуру Севастополя</h2>
+        <p>Большая Тропа — это живописный и захватывающий маршрут по самым интересным и историческим местам Севастополя.</p>
+
+        <h3>Популярные достопримечательности</h3>
+        <div class="card">
+            <img src="https://bst-sev.ru/sites/default/files/styles/juicebox_small/public/image00063-min.jpg" alt="Достопримечательность 1">
+            <div class="card-content">
+                <h3>Башни крепости Чембало</h3>
+                <p>Генуэзская крепость Чембало расположена на горе Кастрон, или Крепостной (172 м), которая отделена от города лощиной Кефало-Вриси («голова источника», греч.). Генуэзцы, построившие крепость, появились здесь около 1343 года.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://bst-sev.ru/sites/default/files/styles/juicebox_small/public/vid_s_g.spiliya_na_zapad_dscn0295.jpg" alt="Достопримечательность 2">
+            <div class="card-content">
+                <h3>Бочка смерти</h3>
+                <p>На вершине одной из гор Балаклавы трудно не заметить небольшое металлическое сооружение, которое в народе получило название «бочка смерти». Хотя это никакая не бочка, хоть и выглядит так, а наблюдательный пост Южного Балаклавского форта.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://bst-sev.ru/sites/default/files/styles/node/public/fotoAlbom/pa162554_.jpg" alt="Достопримечательность 3">
+            <div class="card-content">
+                <h3>Мыс Айя</h3>
+                <p>Мыс Айя – это отвесный выступ главной гряды Крымских гор. Гора Кокия-Кия (высота 558 м) считается наивысшей точкой мыса. С этой горы открывается прекрасный вид на бухту Ласпи и Батилиман. Свое название мыс получил от греческого слова «агиос», что в переводе означает – «святой»</p>
+            </div>
+        </div>
+
+        <main>
+            <div class="map-row">
+                <div class="map-container">
+                    <iframe src="https://yandex.ru/map-widget/v1/?l=stv%2Csta&ll=33.605549%2C44.495741&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgo0Mzc2NzQyNzQ2EnLQoNC-0YHRgdC40Y8sINCh0LXQstCw0YHRgtC-0L_QvtC70YwsINCR0LDQu9Cw0LrQu9Cw0LLQsCwg0JHQvtC70YzRiNCw0Y8g0KHQtdCy0LDRgdGC0L7Qv9C-0LvRjNGB0LrQsNGPINGC0YDQvtC_0LAiCg2WlQZCFbnZMUI%2C&panorama%5Bair%5D=true&panorama%5Bdirection%5D=86.772633%2C-20.748198&panorama%5Bfull%5D=true&panorama%5Bid%5D=1274157623_778353446_23_1620154057&panorama%5Bpoint%5D=33.597317%2C44.494656&panorama%5Bspan%5D=115.014734%2C60.000000&z=16.36" width="100%" height="400" frameborder="1" allowfullscreen="true" class="map-iframe"></iframe>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://yandex.ru/map-widget/v1/?l=stv%2Csta&ll=33.604929%2C44.494468&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgo0Mzc2NzQyNzQ2EnLQoNC-0YHRgdC40Y8sINCh0LXQstCw0YHRgtC-0L_QvtC70YwsINCR0LDQu9Cw0LrQu9Cw0LLQsCwg0JHQvtC70YzRiNCw0Y8g0KHQtdCy0LDRgdGC0L7Qv9C-0LvRjNGB0LrQsNGPINGC0YDQvtC_0LAiCg2WlQZCFbnZMUI%2C&panorama%5Bair%5D=true&panorama%5Bdirection%5D=93.812032%2C-30.792080&panorama%5Bfull%5D=true&panorama%5Bid%5D=1274190764_778350043_23_1634913988&panorama%5Bpoint%5D=33.602872%2C44.495064&panorama%5Bspan%5D=115.014734%2C60.000000&z=18.16" width="100%" height="400" frameborder="1" allowfullscreen="true" class="map-iframe"></iframe>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://yandex.ru/map-widget/v1/?l=stv%2Csta&ll=33.605549%2C44.495741&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgo0Mzc2NzQyNzQ2EnLQoNC-0YHRgdC40Y8sINCh0LXQstCw0YHRgtC-0L_QvtC70YwsINCR0LDQu9Cw0LrQu9Cw0LLQsCwg0JHQvtC70YzRiNCw0Y8g0KHQtdCy0LDRgdGC0L7Qv9C-0LvRjNGB0LrQsNGPINGC0YDQvtC_0LAiCg2WlQZCFbnZMUI%2C&panorama%5Bair%5D=true&panorama%5Bdirection%5D=60.035585%2C-32.990441&panorama%5Bfull%5D=true&panorama%5Bid%5D=1274170349_778360229_23_1616870805&panorama%5Bpoint%5D=33.599450%2C44.493842&panorama%5Bspan%5D=115.014734%2C60.000000&z=16.36" width="100%" height="400" frameborder="1" allowfullscreen="true" class="map-iframe"></iframe>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://yandex.ru/map-widget/v1/?l=stv%2Csta&ll=33.605549%2C44.495741&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgo0Mzc2NzQyNzQ2EnLQoNC-0YHRgdC40Y8sINCh0LXQstCw0YHRgtC-0L_QvtC70YwsINCR0LDQu9Cw0LrQu9Cw0LLQsCwg0JHQvtC70YzRiNCw0Y8g0KHQtdCy0LDRgdGC0L7Qv9C-0LvRjNGB0LrQsNGPINGC0YDQvtC_0LAiCg2WlQZCFbnZMUI%2C&panorama%5Bair%5D=true&panorama%5Bdirection%5D=60.085271%2C-21.817748&panorama%5Bfull%5D=true&panorama%5Bid%5D=1274180623_778361803_23_1619792034&panorama%5Bpoint%5D=33.601172%2C44.493653&panorama%5Bspan%5D=107.754613%2C53.481101&z=16.36" width="100%" height="400" frameborder="1" allowfullscreen="true" class="map-iframe"></iframe>
+                </div>
+                <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af120803f8401f1b3b04d403e2ad724f315314fcb5210d59e7722fcb860888a67&amp;width=1140&amp;height=450&amp;lang=ru_RU&amp;scroll=true"></script>
+            </div>
+        </main>
+
+
+    <footer>
+        <p>© 2024 Большая Тропа Севастополя | Все права защищены</p>
+    </footer>
+</body>
+</html>
